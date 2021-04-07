@@ -8,7 +8,8 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "helmet": "^4.4.1",
-    "jsonwebtoken": "^8.5.1"
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.14",
@@ -38,9 +39,10 @@
       "pre-commit": "lint-staged"
     }
   },
-  "scripts": {    
+  "scripts": {
     "start": "nodemon --exec babel-node -r dotenv/config index.js",
     "dev": "NODE_DEBUG=app* nodemon --exec babel-node -r dotenv/config index.js",
+    "format": "prettier --write .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
