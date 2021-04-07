@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import helmet from 'helmet'
 import morgan from 'morgan'
+import { router } from './routes'
 
 const app = express()
 
@@ -23,38 +24,7 @@ app.use(helmet.contentSecurityPolicy({
   }
 }))
 
-app.get('/', (req, res) => {
-  res.send('Wecome to Login with OTP')
-})
-
-app.use('*', (req, res, next) => {
-  const error = {
-    statusCode: 404,
-    message: ['Cannot', req.method, req.originalUrl].join(' '),
-  }
-  next(error)
-})
-
-app.use((error, req, res, next) => {
-  if (!error) {
-    return
-  }
-
-  const isParseError = error instanceof SyntaxError && error.status === 400
-  if (isParseError) {
-    return res.status(400).json('Invalid JSON body')
-  }
-
-  if (error.statusCode) {
-    if (error.statusCode === 404) {
-      return res.status(404).send('File not found')
-    }
-    return res.status(error.statusCode).json(error)
-  }
-
-  // console.log('[Error]', error)
-  return res.status(500).json(error)
-})
+app.use('/', router)
 
 const port = process.env.PORT
 
